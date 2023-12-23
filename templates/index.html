@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Prediction</title>
+    <style>
+        html {
+            height: 100%;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 300px;
+            padding: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            background-color: #ffffff;
+        }
+        label {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+        input[type="file"] {
+            margin: 5px 0;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
+        button[type="submit"] {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        p {
+            text-align: center;
+            color: #6c757d;
+        }
+        footer {
+            font-size: 12px;
+            position: absolute bottom;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            color: #6c757d;
+        }
+        {% if plot_url %}
+        #fileForm {
+            display: none;
+        }
+        {% else %}
+        #fileForm {
+            display: block;
+        }
+        {% endif %}
+    </style>
+    <script>
+        function submitForm() {
+            var form = document.getElementById('fileForm');
+            form.submit();
+            form.style.display = 'none';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Prediksi Kenaikan Saham</h1>
+        <h4>*menggunakan metode ARIMA</h4>
+        <form id="fileForm" method="post" enctype="multipart/form-data">
+            <label for="file">Upload CSV file:</label>
+            <input type="file" name="file" accept=".csv" required ><br/>
+            <button type="button" onclick="submitForm()">Submit</button>
+        </form>
+
+        {% if plot_url %}
+            <img src="data:image/png;base64,{{ plot_url }}" alt="Stock Analysis Plot">
+            <p>MSE: {{ mse }}</p>
+            <P>MAE: {{ mae }}</P>
+            <p>RMSE: {{ rmse }}</p>
+            <p>{{ recommendation }}</p>
+        {% endif %}
+    </div>
+    <footer>
+        &copy; 2023 Stock Price Prediction. Raihan, Dhifan, Bintang, dan Gilman
+    </footer>
+</body>
+</html>
